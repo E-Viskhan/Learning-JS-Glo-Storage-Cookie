@@ -37,14 +37,12 @@ const render = function () {
       toDoData.forEach(function (item, index) {
         if (item.text === li.innerText) {
           toDoData.splice(index, 1);
-          localStorage.setItem('toDoData', JSON.stringify(toDoData));
         }
       });
     });
 
     li.querySelector('.todo-complete').addEventListener('click', function () {
       item.completed = !item.completed;
-      localStorage.setItem('toDoData', JSON.stringify(toDoData));
       render();
     });
   });
@@ -61,11 +59,13 @@ todoControl.addEventListener('submit', function (event) {
 
     toDoData.push(newToDo);
     headerInput.value = '';
-    localStorage.setItem('toDoData', JSON.stringify(toDoData));
-
     render();
   }
 
+});
+
+window.addEventListener('unload', () => {
+  localStorage.setItem('toDoData', JSON.stringify(toDoData));
 });
 
 getLocalData();
